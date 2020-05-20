@@ -1,42 +1,87 @@
 import React, { FC, useState } from "react";
-import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
+import styled from "styled-components";
 import { Switch, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
-import Content from "./components/Content";
+import ThemeToggler from "./components/ThemeToggler";
 import Champions from "./pages/Champions";
 import Items from "./pages/Items";
 import Spells from "./pages/Spells";
 import Icons from "./pages/Icons";
 
-import lightTheme from "./themes/light";
-import darkTheme from "./themes/dark";
-import style from "./style";
+const AppWrapper = styled.div`
+  width: 100vw;
+  background: rgb(${(props) => props.theme.theme.bg});
+  color: ${(props) => props.theme.theme.color};
 
-const GlobalStyle = createGlobalStyle`
-  * {
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
+  ${(props) => props.theme.style.media.desktop} {
+    display: flex;
   }
 `;
 
-const AppWrapper = styled.div`
-  display: flex;
-  width: 100vw;
+const Container = styled.div`
+  max-width: 85%;
+  margin: 0 auto;
 `;
 
-const App: FC = () => {
-  const [isDarkTheme, setIsDarkTheme] = useState(true);
+const ContentWrapper = styled.div`
+  flex: 1;
+  padding-top: 30px;
+`;
+
+const ContentNavbar = styled.div`
+  display: flex;
+  margin-bottom: 20px;
+`;
+
+const ThemeTogglerWrapper = styled.div`
+  display: block;
+  margin: 0 0 0 auto;
+
+  ${(props) => props.theme.style.media.desktop} {
+    display: none;
+  }
+`;
+
+const MenuBtn = styled.button`
+  background: none;
+  border: 2px solid rgb(${(props) => props.theme.theme.reverse});
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 10px 25px;
+  color: ${(props) => props.theme.theme.color};
+
+  ${(props) => props.theme.style.media.desktop} {
+    display: none;
+  }
+`;
+
+interface Props {
+  changeTheme: () => void;
+  isDarkTheme: boolean;
+}
+
+const App: React.FC<Props> = ({ changeTheme, isDarkTheme }) => {
+  const [isMenuActive, setIsMenuActive] = useState(true);
 
   return (
-    <ThemeProvider
-      theme={{ theme: isDarkTheme ? darkTheme : lightTheme, style }}
-    >
-      <GlobalStyle />
-      <AppWrapper>
-        <Navbar setIsDarkTheme={setIsDarkTheme} isDarkTheme={isDarkTheme} />
-        <Content>
+    <AppWrapper>
+      <Navbar
+        changeTheme={changeTheme}
+        isDarkTheme={isDarkTheme}
+        isMenuActive={isMenuActive}
+        setIsMenuActive={setIsMenuActive}
+      />
+      <ContentWrapper>
+        <Container>
+          <ContentNavbar>
+            <MenuBtn onClick={(): void => setIsMenuActive(true)}>Menu</MenuBtn>
+            <ThemeTogglerWrapper>
+              <ThemeToggler
+                changeTheme={changeTheme}
+                isDarkTheme={isDarkTheme}
+              />
+            </ThemeTogglerWrapper>
+          </ContentNavbar>
           <Switch>
             <Route exact path="/">
               <Champions />
@@ -51,9 +96,9 @@ const App: FC = () => {
               <Icons />
             </Route>
           </Switch>
-        </Content>
-      </AppWrapper>
-    </ThemeProvider>
+        </Container>
+      </ContentWrapper>
+    </AppWrapper>
   );
 };
 

@@ -1,21 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { ReactComponent as Logo } from "assets/images/filled-lol-logo.svg";
-import { ReactComponent as Sun } from "assets/images/sun.svg";
-import { ReactComponent as Moon } from "assets/images/nature.svg";
 import champ from "assets/images/champ.png";
 import item from "assets/images/item.png";
 import spell from "assets/images/spell.png";
 import icon from "assets/images/icon.png";
 import NavbarItem from "./NavbarItem";
 import background from "assets/images/background.png";
+import ThemeToggler from "components/ThemeToggler";
 
 interface NavbarProps {
-  readonly isActive: boolean;
-}
-
-interface SwitchProps {
-  readonly isDarkTheme: boolean;
+  readonly isMenuActive: boolean;
 }
 
 const NavbarWrapper = styled.div<NavbarProps>`
@@ -36,9 +31,11 @@ const NavbarWrapper = styled.div<NavbarProps>`
   display: flex;
   flex-direction: column;
 
-  @media (max-width: 728px) {
-    transform: ${({ isActive }) =>
-      isActive ? "translateX(0)" : "translateX(-100%)"};
+  @media (max-width: 1024px) {
+    transform: ${({ isMenuActive }) =>
+      isMenuActive ? "translateY(0)" : "translateY(-100%)"};
+    transition: ${({ isMenuActive }) =>
+      isMenuActive ? "transform 0.5s ease" : "none"};
   }
 
   .logo {
@@ -63,52 +60,32 @@ const NavWrapper = styled.ul`
   }
 `;
 
-const Switch = styled.button<SwitchProps>`
-  width: 100px;
-  background: rgba(${(props) => props.theme.theme.switch}, 0.4);
-  margin: 0 auto;
-  border-radius: 99px;
-  padding: 3px;
-  border: 0;
-  outline: none;
-  cursor: pointer;
-
-  div {
-    background: rgb(${(props) => props.theme.theme.switch});
-    width: 60%;
-    border-radius: 99px;
-    padding: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-left: ${({ isDarkTheme }) => (isDarkTheme ? "0" : "40%")};
-    transition: margin-left 0.3s ease;
-  }
-
-  svg {
-    fill: black;
+const ThemeTogglerWrapper = styled.div`
+  display: none;
+  ${(props) => props.theme.style.media.desktop} {
     display: block;
-    width: 25px;
-
-    path {
-      fill: rgb(${(props) => props.theme.theme.base});
-    }
+    margin: 0 auto;
   }
 `;
 
 interface Props {
-  setIsDarkTheme: React.Dispatch<React.SetStateAction<boolean>>;
   isDarkTheme: boolean;
+  changeTheme: () => void;
+  isMenuActive: boolean;
+  setIsMenuActive: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const Navbar: React.FC<Props> = ({ setIsDarkTheme, isDarkTheme }) => {
-  const [isActive, setIsActive] = useState(true);
-
+const Navbar: React.FC<Props> = ({
+  isDarkTheme,
+  changeTheme,
+  isMenuActive,
+  setIsMenuActive,
+}) => {
   return (
-    <NavbarWrapper isActive={isActive}>
+    <NavbarWrapper isMenuActive={isMenuActive}>
       <Logo className="logo" />
       <nav>
-        <NavWrapper onClick={(): void => setIsActive(!isActive)}>
+        <NavWrapper onClick={(): void => setIsMenuActive(false)}>
           <NavbarItem link="/">
             <img src={champ} alt="Champion icon" />
             <h3>Champions</h3>
@@ -127,18 +104,9 @@ const Navbar: React.FC<Props> = ({ setIsDarkTheme, isDarkTheme }) => {
           </NavbarItem>
         </NavWrapper>
       </nav>
-      <Switch
-        isDarkTheme={isDarkTheme}
-        onClick={(): void => setIsDarkTheme(!isDarkTheme)}
-      >
-        <div>
-          {isDarkTheme === true ? (
-            <Sun className="sun" />
-          ) : (
-            <Moon className="moon" />
-          )}
-        </div>
-      </Switch>
+      <ThemeTogglerWrapper>
+        <ThemeToggler isDarkTheme={isDarkTheme} changeTheme={changeTheme} />
+      </ThemeTogglerWrapper>
     </NavbarWrapper>
   );
 };

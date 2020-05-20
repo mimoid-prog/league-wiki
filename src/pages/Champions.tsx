@@ -1,16 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-
-const ChampionsWrapper = styled.div`
-  background: ${(props) => props.theme.theme.background};
-  color: ${(props) => props.theme.theme.color};
-`;
+import Layout from "layouts/ContentLayout";
 
 const Champions = () => {
   return (
-    <ChampionsWrapper>
-      <h2>champions</h2>
-    </ChampionsWrapper>
+    <Layout title="Champions">
+      <h2>fajno!</h2>
+    </Layout>
   );
 };
 

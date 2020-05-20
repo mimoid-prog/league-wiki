@@ -3,5 +3,5 @@ export default {
   reverse: "0,0,0",
   bg: "255, 254, 241",
   color: "black",
-  switch: "46, 46, 46",
+  toggler: "46, 46, 46",
 };
