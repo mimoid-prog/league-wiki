@@ -48,6 +48,7 @@ const DetailsDialog = styled(Dialog)`
   color: ${(props) => props.theme.theme.color};
   width: 90vw;
   position: relative;
+  padding: 40px;
 
   img {
     max-width: 100%;
@@ -88,7 +89,6 @@ const DialogImage = styled.div<DialogImageProps>`
     background-image: url(${(props) => props.image});
     background-size: auto 100%;
     background-position: 50%;
-    border-radius: 10px;
   }
 `;
 
@@ -113,7 +113,7 @@ const Champions = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(
-        "http://ddragon.leagueoflegends.com/cdn/10.10.3216176/data/en_US/champion.json",
+        "https://ddragon.leagueoflegends.com/cdn/10.10.3216176/data/en_US/champion.json",
       );
       const data = await res.json();
 
@@ -132,7 +132,7 @@ const Champions = () => {
             blurb: value.blurb,
             title: value.title,
             tags: newTags,
-            image: `http://ddragon.leagueoflegends.com/cdn/img/champion/splash/${value.id}_0.jpg`,
+            image: `https://ddragon.leagueoflegends.com/cdn/img/champion/splash/${value.id}_0.jpg`,
           };
         },
       );
