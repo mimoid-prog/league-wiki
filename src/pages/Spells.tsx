@@ -1,10 +1,11 @@
 import React from "react";
+import Layout from "layouts/ContentLayout";
 
 const Spells = () => {
   return (
-    <div>
-      <h2>spells</h2>
-    </div>
+    <Layout title="Spells">
+      <h2 style={{ fontSize: "60px" }}>spells</h2>
+    </Layout>
   );
 };
 

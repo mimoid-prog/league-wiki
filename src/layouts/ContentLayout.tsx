@@ -1,6 +1,10 @@
 import React from "react";
 import styled from "styled-components";
 
+const ContentLayoutWrapper = styled.div`
+  min-height: 100vh;
+`;
+
 const Navbar = styled.div`
   margin-bottom: 40px;
   display: flex;
@@ -34,7 +38,7 @@ interface Props {
 
 const ContentLayout: React.FC<Props> = ({ title, children }) => {
   return (
-    <div>
+    <ContentLayoutWrapper>
       <Navbar>
         <h2>{title}</h2>
         <Filters>
@@ -43,7 +47,7 @@ const ContentLayout: React.FC<Props> = ({ title, children }) => {
         </Filters>
       </Navbar>
       <Content>{children}</Content>
-    </div>
+    </ContentLayoutWrapper>
   );
 };
 

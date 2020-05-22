@@ -1,10 +1,11 @@
 import React from "react";
+import Layout from "layouts/ContentLayout";
 
 const Icons = () => {
   return (
-    <div>
-      <h2>icons</h2>
-    </div>
+    <Layout title="Icons">
+      <h2 style={{ fontSize: "60px" }}>icons</h2>
+    </Layout>
   );
 };
 

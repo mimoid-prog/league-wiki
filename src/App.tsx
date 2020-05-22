@@ -9,23 +9,27 @@ import Spells from "./pages/Spells";
 import Icons from "./pages/Icons";
 
 const AppWrapper = styled.div`
-  width: 100vw;
+  max-width: 100vw;
+
+  ${(props) => props.theme.style.media.desktop} {
+    display: grid;
+    grid-template-columns: 250px 1fr;
+  }
+`;
+
+const ContentWrapper = styled.div`
+  padding: 30px 0 50px;
   background: rgb(${(props) => props.theme.theme.bg});
   color: ${(props) => props.theme.theme.color};
 
   ${(props) => props.theme.style.media.desktop} {
-    display: flex;
+    grid-column: 2 / 3;
   }
 `;
 
 const Container = styled.div`
   max-width: 85%;
   margin: 0 auto;
-`;
-
-const ContentWrapper = styled.div`
-  flex: 1;
-  padding-top: 30px;
 `;
 
 const ContentNavbar = styled.div`
@@ -61,7 +65,7 @@ interface Props {
 }
 
 const App: React.FC<Props> = ({ changeTheme, isDarkTheme }) => {
-  const [isMenuActive, setIsMenuActive] = useState(true);
+  const [isMenuActive, setIsMenuActive] = useState(false);
 
   return (
     <AppWrapper>

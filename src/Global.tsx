@@ -12,6 +12,10 @@ const GlobalStyle = createGlobalStyle`
     margin: 0;
     font-family: 'Poppins', sans-serif;
   }
+
+  [data-reach-dialog-overlay] {
+    background: hsla(0, 0%, 0%, 0.5);
+  }
 `;
 
 const Global: React.FC = () => {

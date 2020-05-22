@@ -27,7 +27,6 @@ const NavbarWrapper = styled.div<NavbarProps>`
   top: 0;
   left: 0;
   padding: 30px 0;
-  z-index: 0;
   display: flex;
   flex-direction: column;
 
@@ -46,7 +45,7 @@ const NavbarWrapper = styled.div<NavbarProps>`
 
   ${(props) => props.theme.style.media.desktop} {
     width: 250px;
-    position: static;
+    position: fixed;
   }
 `;
 
