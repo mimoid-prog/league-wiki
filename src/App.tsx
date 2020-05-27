@@ -1,4 +1,5 @@
-import React, { FC, useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import styled from "styled-components";
 import { Switch, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
@@ -69,7 +70,12 @@ interface Props {
 }
 
 const App: React.FC<Props> = ({ changeTheme, isDarkTheme }) => {
+  const { pathname } = useLocation();
   const [isMenuActive, setIsMenuActive] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <AppWrapper>

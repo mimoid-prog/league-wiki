@@ -7,7 +7,8 @@ import "@reach/dialog/styles.css";
 
 const List = styled.ul`
   display: grid;
-  grid-gap: 20px 0;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 20px 10px;
   max-width: 100%;
   list-style: none;
 
@@ -23,7 +24,7 @@ const List = styled.ul`
 
     p {
       margin-top: 6px;
-      font-size: 22px;
+      font-size: 20px;
     }
 
     img {
@@ -34,12 +35,16 @@ const List = styled.ul`
   }
 
   ${(props) => props.theme.style.media.tablet} {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 20px 20px;
   }
 
   ${(props) => props.theme.style.media.desktop} {
     grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  ${(props) => props.theme.style.media.large} {
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   }
 `;
 
@@ -105,11 +110,7 @@ const CloseDialog = styled.button`
   display: block;
 `;
 
-interface Props {
-  data?: any[];
-}
-
-const Champions: React.FC<Props> = (props) => {
+const Champions: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [originalChampions, setOriginalChampions] = useState<any[]>([]);
   const [filteredChampions, setFilteredChampions] = useState<any[]>([]);
