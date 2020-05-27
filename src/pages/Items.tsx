@@ -204,7 +204,7 @@ const Items: React.FC = () => {
         data={originalItems}
         filterData={setFilteredItems}
       />
-      {!isLoading ? (
+      {isLoading ? (
         <Loader />
       ) : (
         <>
