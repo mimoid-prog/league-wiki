@@ -15,6 +15,7 @@ const GlobalStyle = createGlobalStyle`
 
   [data-reach-dialog-overlay] {
     background: hsla(0, 0%, 0%, 0.5);
+    z-index: 199;
   }
 `;
 
