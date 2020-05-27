@@ -29,6 +29,7 @@ const NavbarWrapper = styled.div<NavbarProps>`
   padding: 30px 0;
   display: flex;
   flex-direction: column;
+  z-index: 99;
 
   @media (max-width: 1024px) {
     transform: ${({ isMenuActive }) =>

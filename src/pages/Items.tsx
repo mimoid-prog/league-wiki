@@ -170,7 +170,7 @@ const Items: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(
-        "http://ddragon.leagueoflegends.com/cdn/10.10.4/data/en_US/item.json",
+        "https://ddragon.leagueoflegends.com/cdn/10.10.4/data/en_US/item.json",
       );
       const data = await res.json();
 
@@ -204,7 +204,7 @@ const Items: React.FC = () => {
         data={originalItems}
         filterData={setFilteredItems}
       />
-      {isLoading ? (
+      {!isLoading ? (
         <Loader />
       ) : (
         <>
