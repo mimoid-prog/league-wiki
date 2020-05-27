@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Layout from "layouts/ContentLayout";
+import PageHeader from "components/PageHeader";
 import Loader from "components/Loader";
 import { Dialog } from "@reach/dialog";
 import "@reach/dialog/styles.css";
@@ -78,7 +78,7 @@ const DetailsDialog = styled(Dialog)`
 `;
 
 interface DialogImageProps {
-  readonly image: string;
+  readonly image: string | undefined;
 }
 
 const DialogImage = styled.div<DialogImageProps>`
@@ -105,10 +105,30 @@ const CloseDialog = styled.button`
   display: block;
 `;
 
-const Champions = () => {
+interface Props {
+  data?: any[];
+}
+
+const Champions: React.FC<Props> = (props) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [champions, setChampions] = useState<any[]>([]);
-  const [details, setDetails] = useState({ show: false, id: 0 });
+  const [originalChampions, setOriginalChampions] = useState<any[]>([]);
+  const [filteredChampions, setFilteredChampions] = useState<any[]>([]);
+
+  interface DetailsProps {
+    show: boolean;
+    champ: {
+      id?: string;
+      name?: string;
+      blurb?: string;
+      title?: string;
+      tags?: string;
+      image?: string;
+    };
+  }
+  const [details, setDetails] = useState<DetailsProps>({
+    show: false,
+    champ: {},
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -137,46 +157,59 @@ const Champions = () => {
         },
       );
 
-      setChampions(arrayOfChampions);
+      setOriginalChampions(arrayOfChampions);
+      setFilteredChampions(arrayOfChampions);
       setIsLoading(false);
     };
     fetchData();
   }, []);
 
   return (
-    <Layout title="Champions">
+    <>
+      <PageHeader
+        title="Champions"
+        data={originalChampions}
+        filterData={setFilteredChampions}
+      />
       {isLoading ? (
         <Loader />
       ) : (
         <>
-          <List>
-            {champions.map((champ, index) => {
-              return (
-                <li
-                  key={champ.id}
-                  onClick={() => setDetails({ show: true, id: index })}
-                >
-                  <img src={champ.image} alt={champ.name} />
-                  <p>{champ.name}</p>
-                </li>
-              );
-            })}
-          </List>
+          {filteredChampions.length === 0 ? (
+            <h3>No results</h3>
+          ) : (
+            <List>
+              {filteredChampions.map((champ) => {
+                return (
+                  <li
+                    key={champ.id}
+                    onClick={() => setDetails({ show: true, champ })}
+                  >
+                    <img src={champ.image} alt={champ.name} />
+                    <p>{champ.name}</p>
+                  </li>
+                );
+              })}
+            </List>
+          )}
+
           <DetailsDialog isOpen={details.show}>
-            <DialogImage image={champions[details.id].image} />
+            <DialogImage image={details.champ.image} />
             <div>
-              <h2>{champions[details.id].name}</h2>
-              <h3>{champions[details.id].title}</h3>
-              <h4>{champions[details.id].tags}</h4>
-              <p>{champions[details.id].blurb}</p>
-              <CloseDialog onClick={() => setDetails({ show: false, id: 0 })}>
+              <h2>{details.champ.name}</h2>
+              <h3>{details.champ.title}</h3>
+              <h4>{details.champ.tags}</h4>
+              <p>{details.champ.blurb}</p>
+              <CloseDialog
+                onClick={() => setDetails({ show: false, champ: {} })}
+              >
                 Close
               </CloseDialog>
             </div>
           </DetailsDialog>
         </>
       )}
-    </Layout>
+    </>
   );
 };
 

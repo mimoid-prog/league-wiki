@@ -37,6 +37,10 @@ const ContentNavbar = styled.div`
   margin-bottom: 20px;
 `;
 
+const ContentBody = styled.div`
+  min-height: 100vh;
+`;
+
 const ThemeTogglerWrapper = styled.div`
   display: block;
   margin: 0 0 0 auto;
@@ -86,20 +90,22 @@ const App: React.FC<Props> = ({ changeTheme, isDarkTheme }) => {
               />
             </ThemeTogglerWrapper>
           </ContentNavbar>
-          <Switch>
-            <Route exact path="/">
-              <Champions />
-            </Route>
-            <Route path="/items">
-              <Items />
-            </Route>
-            <Route path="/spells">
-              <Spells />
-            </Route>
-            <Route path="/icons">
-              <Icons />
-            </Route>
-          </Switch>
+          <ContentBody>
+            <Switch>
+              <Route exact path="/">
+                <Champions />
+              </Route>
+              <Route path="/items">
+                <Items />
+              </Route>
+              <Route path="/spells">
+                <Spells />
+              </Route>
+              <Route path="/icons">
+                <Icons />
+              </Route>
+            </Switch>
+          </ContentBody>
         </Container>
       </ContentWrapper>
     </AppWrapper>
